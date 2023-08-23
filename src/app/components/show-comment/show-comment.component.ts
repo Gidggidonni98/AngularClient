@@ -12,14 +12,24 @@ export class ShowCommentComponent implements OnInit {
   id: number;
   comment: any;
 
-  constructor(private activateRoute: ActivatedRoute, private _commentService: CommentService){
+  constructor(private activateRoute: ActivatedRoute, private _commentService: CommentService) {
     this.id = +activateRoute.snapshot.paramMap.get('id')!;
     console.log(this.activateRoute.snapshot.paramMap.get('id')!)
   }
   ngOnInit(): void {
-    
+    this.getComment();
   }
 
+
+  getComment() {
+    this._commentService.showComment(this.id).subscribe(data => {
+      this.comment = data;
+      console.log(data)
+    },
+      error => {
+        console.log(error)
+      })
+  }
 
 
 }
